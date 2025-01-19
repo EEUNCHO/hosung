@@ -3,18 +3,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.backend.mapper.MainMapper">
 
-    <!-- 모든 게시글 조회 -->
-    <select id="getAllList" resultType="com.backend.model.Board">
-        SELECT BOARD_NO,
-               BOARD_TITLE,
-               CASE WHEN CHARINDEX(CHAR(10), BOARD_CONTENT) > 0 THEN SUBSTRING(BOARD_CONTENT, 1, CHARINDEX(CHAR(10), BOARD_CONTENT) -1)
-                    ELSE BOARD_CONTENT
-               END BOARD_CONTENT_FIRST,
-               BOARD_CONTENT
+    <!-- 메뉴 조회 -->
+    <select id="getMenu" resultType="com.backend.model.Menu">
+        SELECT MENU_ID, MENU_NM, MENU_EXPLN, MENU_PATH, UP_MENU_ID, MENU_SN, MENU_LVL, ICON, MENU_USE_YN FROM MENU
+    </select>
+
+    <!-- 게시글 조회 -->
+    <select id="getBoardList" resultType="com.backend.model.Board">
+        SELECT 
+            BOARD_NO,
+            BOARD_TITLE,
+            CASE WHEN CHARINDEX(CHAR(10), BOARD_CONTENT) > 0 THEN SUBSTRING(BOARD_CONTENT, 1, CHARINDEX(CHAR(10), BOARD_CONTENT) -1)
+                ELSE BOARD_CONTENT
+            END BOARD_CONTENT_FIRST,
+            BOARD_CONTENT
         FROM BOARD
     </select>
 
-    <!-- 모든 게시글 조회 -->
+    <!-- 게시글 생성 -->
     <insert id="addBoard" parameterType="com.backend.model.Board">
         INSERT INTO BOARD (BOARD_NO, BOARD_TITLE, BOARD_CONTENT)
         VALUES ( ISNULL((SELECT MAX(BOARD_NO) + 1 FROM BOARD), 0), #{boardTitle}, #{boardContent} )

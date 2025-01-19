@@ -1,32 +1,42 @@
 <template>
-  <el-button @click="openPopup(null)"> 신규 </el-button>
+  <div class="page-container">
+    <div class="fixed-header">
+      <el-button @click="openPopup(null)"> 신규 </el-button>
+      <el-button type="primary" @click="getBoardList"> 조회 </el-button>
+    </div>
+    <el-table
+      :data="boardList"
+      border
+      stripe
+      :default-sort="{ prop: 'boardNo', order: 'ascending' }"
+    >
+      <!--ascending, descending-->
+      <el-table-column prop="boardNo" label="순번" sortable width="80" />
+      <el-table-column prop="boardTitle" label="제목" width="300">
+        <template #default="scope">
+          <el-link @click="openPopup(scope.row)">
+            {{ scope.row.boardTitle }}
+          </el-link>
+        </template>
+      </el-table-column>
+      <el-table-column prop="boardContentFirst" label="내용" />
+    </el-table>
 
-  <el-table :data="boardList" stripe>
-    <el-table-column prop="boardNo" label="순번" />
-    <el-table-column prop="boardTitle" label="제목">
-      <template #default="scope">
-        <el-button @click="openPopup(scope.row)">
-          {{ scope.row.boardTitle }}
-        </el-button>
+    <el-dialog v-model="dialogVisible" title="신규 작성" width="500">
+      <el-form :model="form">
+        <el-form-item label="제목">
+          <el-input v-model="form.boardTitle" />
+        </el-form-item>
+        <el-form-item label="내용">
+          <el-input v-model="form.boardContent" :rows="5" type="textarea" />
+        </el-form-item>
+      </el-form>
+      <template v-if="btnVisible" #footer>
+        <el-button @click="dialogVisible = false"> 취소 </el-button>
+        <el-button type="primary" @click="addBoard"> 저장 </el-button>
       </template>
-    </el-table-column>
-    <el-table-column prop="boardContentFirst" label="내용" />
-  </el-table>
-
-  <el-dialog v-model="dialogVisible" title="신규 작성" width="500">
-    <el-form :model="form">
-      <el-form-item label="제목">
-        <el-input v-model="form.boardTitle" />
-      </el-form-item>
-      <el-form-item label="내용">
-        <el-input v-model="form.boardContent" :rows="5" type="textarea" />
-      </el-form-item>
-    </el-form>
-    <template v-if="btnVisible" #footer>
-      <el-button @click="dialogVisible = false"> 취소 </el-button>
-      <el-button type="primary" @click="addBoard"> 저장 </el-button>
-    </template>
-  </el-dialog>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
@@ -54,7 +64,6 @@ export default {
       axios
         .get('/api/main/getBoard')
         .then((res) => {
-          console.log(res)
           this.boardList = res.data
         })
         .catch((err) => {
@@ -103,3 +112,24 @@ export default {
   },
 }
 </script>
+<style scoped>
+.page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.fixed-header {
+  background-color: #fff;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  position: sticky; /* 스크롤 시 고정 */
+  top: 0;
+  z-index: 10;
+}
+
+.scrollable-content {
+  flex: 1;
+  overflow: auto;
+}
+</style>
