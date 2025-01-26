@@ -5,7 +5,9 @@
 
     <!-- 메뉴 조회 -->
     <select id="getMenu" resultType="com.backend.model.Menu">
-        SELECT MENU_ID, MENU_NM, MENU_EXPLN, MENU_PATH, UP_MENU_ID, MENU_SN, MENU_LVL, ICON, MENU_USE_YN FROM MENU
+        SELECT MENU_ID, MENU_NM, MENU_EXPLN, MENU_PATH, UP_MENU_ID, MENU_SN, MENU_LVL, ICON, MENU_USE_YN
+        FROM MENU
+        WHERE MENU_USE_YN = 'Y'
     </select>
 
     <!-- 게시글 조회 -->

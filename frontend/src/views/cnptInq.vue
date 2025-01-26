@@ -2,6 +2,9 @@
   <div class="page-container">
     <div class="fixed-header">
       <el-form :inline="true">
+        <el-form-item :label="'매입일자'">
+          <el-date-picker v-model="searchDate" type="date" />
+        </el-form-item>
         <el-form-item>
           <el-button @click="openPopup(null)"> 신규 </el-button>
           <el-button type="primary" @click="getBoardList"> 조회 </el-button>
@@ -31,17 +34,19 @@
 import axios from 'axios'
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessageBox } from 'element-plus'
+import moment from 'moment'
 
 export default {
-  name: 'boardList',
+  name: 'purMng',
   components: {
     AgGridVue,
   },
   data() {
     return {
+      searchDate: null,
       boardList: [],
       colDefs: [
-        { headerName: '순번', field: 'boardNo' },
+        { headerName: '순번', field: 'boardNo', width: 85, minWidth: 85 },
         { headerName: '제목', field: 'boardTitle' },
         { headerName: '내용', field: 'boardContentFirst' },
       ],
@@ -55,6 +60,9 @@ export default {
   },
   created() {
     this.getBoardList()
+  },
+  mounted() {
+    this.searchDate = moment().format('YYYY-MM-DD')
   },
   methods: {
     getBoardList() {

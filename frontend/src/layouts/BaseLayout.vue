@@ -11,14 +11,14 @@
               :index="menu.menuPath"
               @click="moveHandle(menu.menuPath)"
             >
-              <el-icon></el-icon>
+              <el-icon><component :is="menu.icon" /></el-icon>
               {{ menu.menuNm }}
             </el-menu-item>
 
             <!-- 상위 메뉴 -->
             <el-sub-menu v-else :index="menu.menuId">
               <template #title>
-                <el-icon></el-icon>
+                <el-icon><Folder /></el-icon>
                 {{ menu.menuNm }}
               </template>
               <!-- 하위 메뉴 -->
@@ -28,7 +28,7 @@
                 :index="sub.menuPath"
                 @click="moveHandle(sub.menuPath)"
               >
-                <el-icon></el-icon>
+                <el-icon><component :is="sub.icon" /></el-icon>
                 {{ sub.menuNm }}
               </el-menu-item>
             </el-sub-menu>
