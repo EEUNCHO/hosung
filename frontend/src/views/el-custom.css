@@ -1,3 +1,7 @@
 .el-row {
   margin-bottom: 20px;
 }
+
+.el-menu {
+  border: none;
+}

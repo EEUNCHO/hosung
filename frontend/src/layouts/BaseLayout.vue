@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <!-- 사이드 메뉴 -->
-    <el-aside width="200px">
+    <el-aside class="aside">
       <el-scrollbar>
         <el-menu :default-openeds="['H2000']" :default-active="activeMenu">
           <template v-for="menu in topMenus" :key="menu.menuId">
@@ -38,20 +38,15 @@
     </el-aside>
 
     <!-- 메인 컨텐츠 -->
-    <el-container>
+    <el-container class="main-container">
       <el-header class="header">
         <router-link to="/">
           <el-icon size="17"><HomeFilled /></el-icon>
         </router-link>
         {{ today + headerText }}
       </el-header>
-      <el-main>
-        <el-scrollbar class="main-content">
-          <!-- 페이지 컨텐츠 -->
-          <!-- <slot /> -->
-          <router-view />
-          <!-- 이곳에 자식 페이지가 렌더링됩니다 -->
-        </el-scrollbar>
+      <el-main class="main-content">
+        <router-view />
       </el-main>
     </el-container>
   </el-container>
@@ -115,15 +110,49 @@ export default {
 </script>
 
 <style scoped>
+.aside {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 150px;
+  height: 100vh;
+  z-index: 1000;
+  border-right: 1px solid var(--el-border-color);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.aside::after {
+  content: '';
+  flex-grow: 1;
+  background-color: var(--el-color-primary-light-8);
+  border-right: 1px solid var(--el-border-color);
+}
+
 .header {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 150px;
+  right: 0;
+  height: 60px;
+  line-height: 60px;
+  background-color: var(--el-color-primary-light-8);
+  padding: 0 20px;
   text-align: right;
-  background-color: var(--el-color-primary-light-7);
-  padding: 10px;
+  z-index: 1000;
   font-weight: bold;
 }
+
+.main-container {
+  margin-left: 150px;
+  margin-top: 60px;
+}
+
 .main-content {
-  height: calc(100vh - 100px); /* 헤더와 메뉴 제외한 높이 계산 */
+  padding: 20px;
+  height: calc(100vh - 60px);
   overflow: auto;
 }
 </style>

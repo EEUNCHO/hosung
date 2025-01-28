@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.backend.pur.mapper.PurMapper">
+
+    <!-- 매입 내역 조회 -->
+    <select id="getPurchaseList" resultType="com.backend.pur.model.Purchase">
+        SELECT 
+            ROW_NUMBER() OVER(ORDER BY PUR_DT, PUR_NO) AS ROW_NUM,
+            PUR_NO,
+            PUR_DT,
+            CNPT_CD,
+            ITEM_CD,
+            SHIPPER,
+            WEIGHT,
+            UNIT_CD,
+            PUR_CNT,
+            PUR_UNTPRC,
+            PUR_AMT,
+            CRT_DT
+        FROM PURCHASE
+        WHERE 1 = 1
+        <if test="searchDate != null">
+        AND PUR_DT = #{searchDate}
+        </if>
+    </select>
+
+</mapper>

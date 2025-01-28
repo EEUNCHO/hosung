@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.backend.mapper.MainMapper">
+<mapper namespace="com.backend.main.mapper.MainMapper">
 
     <!-- 메뉴 조회 -->
-    <select id="getMenu" resultType="com.backend.model.Menu">
-        SELECT MENU_ID, MENU_NM, MENU_EXPLN, MENU_PATH, UP_MENU_ID, MENU_SN, MENU_LVL, ICON, MENU_USE_YN
+    <select id="getMenu" resultType="com.backend.main.model.Menu">
+        SELECT MENU_ID, MENU_NM, MENU_EXPLN, MENU_PATH, UP_MENU_ID, SORT_SN, MENU_LVL, ICON, USE_YN
         FROM MENU
-        WHERE MENU_USE_YN = 'Y'
+        WHERE USE_YN = 'Y'
+        ORDER BY MENU_ID
     </select>
 
     <!-- 게시글 조회 -->
-    <select id="getBoardList" resultType="com.backend.model.Board">
+    <select id="getBoardList" resultType="com.backend.main.model.Board">
         SELECT 
             BOARD_NO,
             BOARD_TITLE,
@@ -23,9 +24,9 @@
     </select>
 
     <!-- 게시글 생성 -->
-    <insert id="addBoard" parameterType="com.backend.model.Board">
+    <insert id="addBoard" parameterType="com.backend.main.model.Board">
         INSERT INTO BOARD (BOARD_NO, BOARD_TITLE, BOARD_CONTENT)
-        VALUES ( ISNULL((SELECT MAX(BOARD_NO) + 1 FROM BOARD), 0), #{boardTitle}, #{boardContent} )
+        VALUES ( ISNULL((SELECT MAX(BOARD_NO) FROM BOARD), 0) + 1, #{boardTitle}, #{boardContent} )
     </insert>
 
 </mapper>

@@ -1,30 +1,26 @@
 <template>
-  <div class="page-container">
-    <div class="fixed-header">
-      <el-form :inline="true">
-        <el-form-item>
-          <el-button @click="openPopup(null)"> 신규 </el-button>
-          <el-button type="primary" @click="getBoardList"> 조회 </el-button>
-        </el-form-item>
-      </el-form>
-    </div>
-    <ag-grid-vue :rowData="boardList" :columnDefs="colDefs" style="height: 600px"> </ag-grid-vue>
+  <el-form :inline="true">
+    <el-form-item>
+      <el-button @click="openPopup(null)"> 신규 </el-button>
+      <el-button type="primary" @click="getBoardList"> 조회 </el-button>
+    </el-form-item>
+  </el-form>
+  <ag-grid-vue :rowData="boardList" :columnDefs="colDefs" style="height: 600px" />
 
-    <el-dialog v-model="dialogVisible" title="신규 작성" width="500">
-      <el-form :model="form">
-        <el-form-item label="제목">
-          <el-input v-model="form.boardTitle" />
-        </el-form-item>
-        <el-form-item label="내용">
-          <el-input v-model="form.boardContent" :rows="5" type="textarea" />
-        </el-form-item>
-      </el-form>
-      <template v-if="btnVisible" #footer>
-        <el-button @click="dialogVisible = false"> 취소 </el-button>
-        <el-button type="primary" @click="addBoard"> 저장 </el-button>
-      </template>
-    </el-dialog>
-  </div>
+  <el-dialog v-model="dialogVisible" title="신규 작성" width="500">
+    <el-form :model="form">
+      <el-form-item label="제목">
+        <el-input v-model="form.boardTitle" />
+      </el-form-item>
+      <el-form-item label="내용">
+        <el-input v-model="form.boardContent" :rows="5" type="textarea" />
+      </el-form-item>
+    </el-form>
+    <template v-if="btnVisible" #footer>
+      <el-button @click="dialogVisible = false"> 취소 </el-button>
+      <el-button type="primary" @click="addBoard"> 저장 </el-button>
+    </template>
+  </el-dialog>
 </template>
 
 <script>
@@ -109,23 +105,3 @@ export default {
   },
 }
 </script>
-<style scoped>
-.page-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.fixed-header {
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
-  position: sticky; /* 스크롤 시 고정 */
-  top: 0;
-  z-index: 10;
-}
-
-.scrollable-content {
-  flex: 1;
-  overflow: auto;
-}
-</style>

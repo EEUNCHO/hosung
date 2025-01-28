@@ -1,13 +1,13 @@
-package com.backend.service;
+package com.backend.main.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.backend.mapper.MainMapper;
-import com.backend.model.Menu;
-import com.backend.model.Board;
+import com.backend.main.mapper.MainMapper;
+import com.backend.main.model.Menu;
+import com.backend.main.model.Board;
 
 @Service
 public class MainService {

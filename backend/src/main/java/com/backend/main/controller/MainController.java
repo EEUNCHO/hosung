@@ -1,13 +1,13 @@
-package com.backend.controller.main;
+package com.backend.main.controller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.backend.model.Menu;
-import com.backend.model.Board;
-import com.backend.service.MainService;
+import com.backend.main.model.Menu;
+import com.backend.main.model.Board;
+import com.backend.main.service.MainService;
 
 @RestController
 @RequestMapping("/api")
